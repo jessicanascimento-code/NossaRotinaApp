@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Nossa Rotina 🐱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rosa-claro: #F3DCDC;
+    --rosa-claro-2: #FAF0EE;
+    --rosa-medio: #CE9797;
+    --rosa-queimado: #A66868;
+    --rosa-queimado-escuro: #8A5252;
+    --marrom: #5C4444;
+    --marrom-escuro: #40302E;
+    --verde-salvia: #8FA487;
+    --ok-bg: #E6EBE3;
+    --adiada-bg: #EAD9CE;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+  body{
+    margin:0; font-family:'Montserrat', sans-serif;
+    background: var(--rosa-claro); color: var(--marrom-escuro);
+    min-height:100vh;
+  }
+  .container{ max-width:480px; margin:0 auto; padding:28px 18px 100px; }
+  header.top{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; }
+  .eyebrow{ font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color: var(--rosa-queimado-escuro); font-weight:700; }
+  h1{ font-family:'Playfair Display', serif; font-size:26px; font-weight:600; margin:2px 0 0; }
+  .date{ font-size:12px; opacity:0.65; margin-top:4px; }
+  .rings{ display:flex; gap:10px; }
+  .ring{ width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:#fff; }
+  .ring-label{ font-size:9px; margin-top:4px; opacity:0.7; font-weight:600; text-align:center; }
+  .tabs{ display:flex; gap:6px; background: var(--rosa-claro-2); padding:4px; border-radius:14px; margin-bottom:20px; }
+  .tab{ flex:1; text-align:center; padding:8px 0; font-size:12.5px; font-weight:700; border-radius:11px; opacity:0.55; cursor:pointer; }
+  .tab.active{ background: var(--marrom-escuro); color:#fff; opacity:1; }
+  .group-label{ font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color: var(--rosa-queimado-escuro); margin:18px 0 10px 2px; }
+  .card{ background:#fff; border-radius:18px; padding:14px 14px 12px; margin-bottom:10px; box-shadow:0 2px 14px rgba(91,64,56,0.08); border:1px solid rgba(91,64,56,0.06); }
+  .card.done{ opacity:0.55; }
+  .card-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .card-title{ font-family:'Playfair Display', serif; font-size:16.5px; font-weight:500; line-height:1.25; }
+  .card.done .card-title{ text-decoration: line-through; text-decoration-color: rgba(91,64,56,0.4); }
+  .avatar{ width:26px; height:26px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:#fff; }
+  .meta-row{ display:flex; gap:6px; margin-top:8px; flex-wrap:wrap; }
+  .tag{ font-size:10px; font-weight:700; padding:3px 9px; border-radius:20px; background: var(--rosa-claro-2); color: var(--marrom); border:1px solid rgba(91,64,56,0.12); }
+  .status-row{ display:flex; gap:6px; margin-top:12px; }
+  .status-btn{ flex:1; text-align:center; font-size:11px; font-weight:700; padding:7px 0; border-radius:10px; border:1.5px solid transparent; cursor:pointer; background: var(--rosa-claro-2); opacity:0.5; }
+  .status-btn.sel-pendente{ border-color: var(--rosa-queimado); color: var(--rosa-queimado-escuro); opacity:1; }
+  .status-btn.sel-feita{ background: var(--ok-bg); border-color: var(--verde-salvia); color:#4F5C48; opacity:1; }
+  .status-btn.sel-adiada{ background: var(--adiada-bg); border-color:#B98254; color:#8A5A34; opacity:1; }
+  .empty{ text-align:center; padding:40px 10px; opacity:0.6; font-size:13px; }
+  .bottom-nav{ position:fixed; bottom:0; left:0; right:0; height:64px; background:rgba(255,255,255,0.94); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:space-around; border-top:1px solid rgba(91,64,56,0.08); max-width:480px; margin:0 auto; }
+  .nav-item{ text-align:center; font-size:10px; font-weight:700; opacity:0.4; cursor:pointer; }
+  .nav-item.active{ opacity:1; color: var(--rosa-queimado-escuro); }
+
+  /* Admin */
+  .hidden{ display:none !important; }
+  .pin-screen{ text-align:center; padding-top:80px; }
+  .pin-screen input{ font-size:22px; text-align:center; letter-spacing:6px; padding:12px; border-radius:12px; border:1.5px solid var(--rosa-medio); width:160px; margin-top:20px; }
+  .btn-primario{ background: var(--rosa-queimado-escuro); color:#fff; border:none; padding:10px 20px; border-radius:12px; font-weight:700; font-size:13px; cursor:pointer; margin-top:14px; }
+  .form-admin label{ font-size:11px; font-weight:700; color: var(--marrom); display:block; margin:12px 0 4px; }
+  .form-admin input, .form-admin select{ width:100%; padding:9px 10px; border-radius:10px; border:1.5px solid rgba(91,64,56,0.18); font-family:inherit; font-size:13px; }
+  .admin-item{ display:flex; justify-content:space-between; align-items:center; background:#fff; padding:10px 12px; border-radius:12px; margin-bottom:8px; font-size:13px; }
+  .admin-item .acoes span{ cursor:pointer; margin-left:10px; font-size:12px; color: var(--rosa-queimado-escuro); font-weight:700; }
+  .toast{ position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:var(--marrom-escuro); color:#fff; padding:10px 18px; border-radius:20px; font-size:12px; opacity:0; transition:opacity .3s; pointer-events:none; }
+  .toast.show{ opacity:1; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- TELA PRINCIPAL -->
+  <div id="tela-principal">
+    <header class="top">
+      <div>
+        <div class="eyebrow">Nossa Rotina 🐱</div>
+        <h1 id="saudacao">Bom dia!</h1>
+        <div class="date" id="data-hoje"></div>
+      </div>
+      <div class="rings" id="anéis"></div>
+    </header>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="hoje">Hoje</div>
+      <div class="tab" data-tab="todas">Todas</div>
+    </div>
+
+    <div id="lista-atividades"><div class="empty">Carregando...</div></div>
+  </div>
+
+  <!-- TELA PIN ADMIN -->
+  <div id="tela-pin" class="hidden pin-screen">
+    <div class="eyebrow">Área admin</div>
+    <h1>Digite o PIN</h1>
+    <input type="password" id="input-pin" inputmode="numeric" maxlength="6">
+    <br>
+    <button class="btn-primario" onclick="validarPin()">Entrar</button>
+  </div>
+
+  <!-- TELA ADMIN -->
+  <div id="tela-admin" class="hidden">
+    <div class="eyebrow">Nossa Rotina 🐱 — Admin</div>
+    <h1>Gerenciar atividades</h1>
+
+    <div class="form-admin" style="background:#fff; border-radius:16px; padding:14px; margin-top:16px;">
+      <input type="hidden" id="admin-id">
+      <label>Tarefa</label>
+      <input type="text" id="admin-tarefa">
+      <label>Observação</label>
+      <input type="text" id="admin-observacao">
+      <label>Frequência</label>
+      <select id="admin-frequencia">
+        <option value="Diariamente">Diariamente</option>
+        <option value="2x Semana">2x Semana</option>
+        <option value="3x Semana">3x Semana</option>
+        <option value="Sábado ou Domingo">Sábado ou Domingo</option>
+        <option value="Mensal">Mensal</option>
+        <option value="Extra">Extra (data única)</option>
+      </select>
+      <label>Dias (ex: seg-sex, ter/sex, dom/qua/sex — deixe vazio se for Mensal/Extra/Fim de semana)</label>
+      <input type="text" id="admin-dias">
+      <label>Data de referência (só p/ Mensal ou Extra — formato AAAA-MM-DD)</label>
+      <input type="text" id="admin-dataReferencia" placeholder="2026-08-01">
+      <label>Responsável</label>
+      <input type="text" id="admin-responsavel">
+      <button class="btn-primario" onclick="salvarAtividade()">Salvar</button>
+    </div>
+
+    <div class="group-label" style="margin-top:22px;">Atividades cadastradas</div>
+    <div id="lista-admin"></div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item active" data-view="principal">🐱 Hoje</div>
+    <div class="nav-item" data-view="admin">⚙️ Admin</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ======= CONFIGURAÇÃO ======= */
+// Cole aqui a URL do seu Web App do Apps Script (veja o GUIA_CONFIGURACAO.md)
+const API_URL = 'https://script.google.com/macros/s/AKfycbzrEZ6Ik2GeWJAjkgRq6YDUSyctKqH_hrBhAsDWgHeBqo60b_q3BcJ4DYsB3mhXICmc/exec';
+
+const CORES_PESSOA = {}; // preenchido dinamicamente com base nos responsáveis encontrados
+const PALETA_AVATAR = ['#A66868', '#5C4444'];
+
+/* ======= JSONP HELPER ======= */
+let contadorJsonp = 0;
+function chamarApi(params) {
+  return new Promise((resolve, reject) => {
+    const cbName = 'cb_' + (contadorJsonp++);
+    window[cbName] = (data) => {
+      resolve(data);
+      delete window[cbName];
+      script.remove();
+    };
+    const query = Object.keys(params).map(k => k + '=' + encodeURIComponent(params[k])).join('&');
+    const script = document.createElement('script');
+    script.src = API_URL + '?' + query + '&callback=' + cbName;
+    script.onerror = () => reject(new Error('Falha ao chamar API'));
+    document.body.appendChild(script);
+  });
+}
+
+function mostrarToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ======= NAVEGAÇÃO ======= */
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    const view = item.dataset.view;
+    document.getElementById('tela-principal').classList.toggle('hidden', view !== 'principal');
+    if (view === 'admin') {
+      const jaLogado = sessionStorage.getItem('nr_pin_ok') === '1';
+      document.getElementById('tela-pin').classList.toggle('hidden', jaLogado);
+      document.getElementById('tela-admin').classList.toggle('hidden', !jaLogado);
+      if (jaLogado) carregarAdmin();
+    } else {
+      document.getElementById('tela-pin').classList.add('hidden');
+      document.getElementById('tela-admin').classList.add('hidden');
+    }
+  });
+});
+
+/* ======= TELA PRINCIPAL ======= */
+function formatarDataExtenso(dataStr) {
+  const d = new Date(dataStr + 'T00:00:00');
+  return d.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+}
+
+async function carregarHoje() {
+  document.getElementById('data-hoje').textContent = formatarDataExtenso(new Date().toISOString().slice(0,10));
+  const hora = new Date().getHours();
+  document.getElementById('saudacao').textContent = hora < 12 ? 'Bom dia!' : (hora < 18 ? 'Boa tarde!' : 'Boa noite!');
+
+  const resp = await chamarApi({ action: 'listarHoje' });
+  const lista = document.getElementById('lista-atividades');
+  lista.innerHTML = '';
+
+  if (!resp.atividades || resp.atividades.length === 0) {
+    lista.innerHTML = '<div class="empty">Nada previsto por hoje 🐾</div>';
+    atualizarAneis([]);
+    return;
+  }
+
+  resp.atividades.forEach(a => {
+    const card = document.createElement('div');
+    card.className = 'card' + (a.status === 'Feita' ? ' done' : '');
+    const inicial = (a.responsavel || '?').charAt(0).toUpperCase();
+    const cor = corDaPessoa(a.responsavel);
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="card-title">${a.tarefa}</div>
+        <div class="avatar" style="background:${cor}">${inicial}</div>
+      </div>
+      <div class="meta-row">
+        <span class="tag">${a.frequencia}</span>
+        ${a.observacao ? `<span class="tag">${a.observacao}</span>` : ''}
+      </div>
+      <div class="status-row">
+        <div class="status-btn ${a.status === 'Pendente' ? 'sel-pendente' : ''}" data-status="Pendente">Pendente</div>
+        <div class="status-btn ${a.status === 'Feita' ? 'sel-feita' : ''}" data-status="Feita">Feita</div>
+        <div class="status-btn ${a.status === 'Adiada' ? 'sel-adiada' : ''}" data-status="Adiada">Adiada</div>
+      </div>
+    `;
+    card.querySelectorAll('.status-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const novoStatus = btn.dataset.status;
+        card.querySelectorAll('.status-btn').forEach(b => b.classList.remove('sel-pendente','sel-feita','sel-adiada'));
+        btn.classList.add('sel-' + novoStatus.toLowerCase());
+        card.classList.toggle('done', novoStatus === 'Feita');
+        await chamarApi({ action: 'atualizarStatus', id: a.id, data: a.data, status: novoStatus });
+        mostrarToast('Atualizado ✓');
+      });
+    });
+    lista.appendChild(card);
+  });
+
+  atualizarAneis(resp.atividades);
+}
+
+function corDaPessoa(nome) {
+  if (!CORES_PESSOA[nome]) {
+    const cores = ['#A66868', '#5C4444', '#CE9797'];
+    CORES_PESSOA[nome] = cores[Object.keys(CORES_PESSOA).length % cores.length];
+  }
+  return CORES_PESSOA[nome];
+}
+
+function atualizarAneis(atividades) {
+  const porPessoa = {};
+  atividades.forEach(a => {
+    if (!porPessoa[a.responsavel]) porPessoa[a.responsavel] = { total: 0, feitas: 0 };
+    porPessoa[a.responsavel].total++;
+    if (a.status === 'Feita') porPessoa[a.responsavel].feitas++;
+  });
+  const container = document.getElementById('anéis');
+  container.innerHTML = '';
+  Object.keys(porPessoa).forEach(pessoa => {
+    const { total, feitas } = porPessoa[pessoa];
+    const pct = total ? Math.round((feitas / total) * 100) : 0;
+    const cor = corDaPessoa(pessoa);
+    const wrap = document.createElement('div');
+    wrap.style.textAlign = 'center';
+    wrap.innerHTML = `
+      <div class="ring" style="background: conic-gradient(${cor} 0% ${pct}%, #E7D3C9 ${pct}% 100%);">${pct}%</div>
+      <div class="ring-label">${pessoa}</div>
+    `;
+    container.appendChild(wrap);
+  });
+}
+
+/* ======= ADMIN ======= */
+async function validarPin() {
+  const pin = document.getElementById('input-pin').value;
+  const resp = await chamarApi({ action: 'verificarPin', pin });
+  if (resp.ok) {
+    sessionStorage.setItem('nr_pin_ok', '1');
+    sessionStorage.setItem('nr_pin', pin);
+    document.getElementById('tela-pin').classList.add('hidden');
+    document.getElementById('tela-admin').classList.remove('hidden');
+    carregarAdmin();
+  } else {
+    mostrarToast('PIN incorreto');
+  }
+}
+
+async function carregarAdmin() {
+  const pin = sessionStorage.getItem('nr_pin');
+  const resp = await chamarApi({ action: 'adminListar', pin });
+  const lista = document.getElementById('lista-admin');
+  lista.innerHTML = '';
+  (resp.atividades || []).forEach(a => {
+    const item = document.createElement('div');
+    item.className = 'admin-item';
+    item.innerHTML = `
+      <span>${a.ativo ? '' : '🚫 '}${a.tarefa} <small style="opacity:.6">(${a.responsavel})</small></span>
+      <span class="acoes"><span onclick='editarAtividade(${JSON.stringify(a)})'>editar</span><span onclick="excluirAtividade('${a.id}')">excluir</span></span>
+    `;
+    lista.appendChild(item);
+  });
+}
+
+function editarAtividade(a) {
+  document.getElementById('admin-id').value = a.id;
+  document.getElementById('admin-tarefa').value = a.tarefa;
+  document.getElementById('admin-observacao').value = a.observacao || '';
+  document.getElementById('admin-frequencia').value = a.frequencia;
+  document.getElementById('admin-dias').value = a.dias || '';
+  document.getElementById('admin-dataReferencia').value = a.dataReferencia || '';
+  document.getElementById('admin-responsavel').value = a.responsavel;
+  window.scrollTo(0,0);
+}
+
+async function salvarAtividade() {
+  const pin = sessionStorage.getItem('nr_pin');
+  const id = document.getElementById('admin-id').value;
+  const dados = {
+    pin,
+    tarefa: document.getElementById('admin-tarefa').value,
+    observacao: document.getElementById('admin-observacao').value,
+    frequencia: document.getElementById('admin-frequencia').value,
+    dias: document.getElementById('admin-dias').value,
+    dataReferencia: document.getElementById('admin-dataReferencia').value,
+    responsavel: document.getElementById('admin-responsavel').value
+  };
+  if (id) {
+    dados.id = id;
+    await chamarApi({ action: 'adminEditar', ...dados });
+  } else {
+    await chamarApi({ action: 'adminAdicionar', ...dados });
+  }
+  mostrarToast('Salvo ✓');
+  document.getElementById('admin-id').value = '';
+  ['tarefa','observacao','dias','dataReferencia','responsavel'].forEach(c => document.getElementById('admin-' + c).value = '');
+  carregarAdmin();
+}
+
+async function excluirAtividade(id) {
+  if (!confirm('Remover essa atividade? (fica inativa, o histórico é mantido)')) return;
+  const pin = sessionStorage.getItem('nr_pin');
+  await chamarApi({ action: 'adminExcluir', id, pin });
+  mostrarToast('Removida ✓');
+  carregarAdmin();
+}
+
+/* ======= TABS HOJE/TODAS ======= */
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    if (tab.dataset.tab === 'hoje') carregarHoje();
+    else carregarTodas();
+  });
+});
+
+async function carregarTodas() {
+  const resp = await chamarApi({ action: 'listarTodas' });
+  const lista = document.getElementById('lista-atividades');
+  lista.innerHTML = '';
+  (resp.atividades || []).forEach(a => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="card-title">${a.tarefa}</div>
+        <div class="avatar" style="background:${corDaPessoa(a.responsavel)}">${a.responsavel.charAt(0).toUpperCase()}</div>
+      </div>
+      <div class="meta-row"><span class="tag">${a.frequencia}</span><span class="tag">${a.responsavel}</span></div>
+    `;
+    lista.appendChild(card);
+  });
+}
+
+/* ======= INÍCIO ======= */
+carregarHoje();
+</script>
+</body>
+</html>
