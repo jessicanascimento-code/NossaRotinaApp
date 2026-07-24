@@ -101,8 +101,13 @@
 
   <!-- TELA ADMIN -->
   <div id="tela-admin" class="hidden">
-    <div class="eyebrow">Nossa Rotina 🐱 — Admin</div>
-    <h1>Gerenciar atividades</h1>
+    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+      <div>
+        <div class="eyebrow">Nossa Rotina 🐱 — Admin</div>
+        <h1>Gerenciar atividades</h1>
+      </div>
+      <span onclick="sairAdmin()" style="font-size:11px; font-weight:700; color:var(--rosa-queimado-escuro); cursor:pointer; padding:6px 12px; border:1.5px solid var(--rosa-queimado-escuro); border-radius:20px; margin-top:4px;">Sair</span>
+    </div>
 
     <div class="form-admin" style="background:#fff; border-radius:16px; padding:14px; margin-top:16px;">
       <input type="hidden" id="admin-id">
@@ -293,6 +298,14 @@ async function validarPin() {
   } else {
     mostrarToast('PIN incorreto');
   }
+}
+
+function sairAdmin() {
+  sessionStorage.removeItem('nr_pin_ok');
+  sessionStorage.removeItem('nr_pin');
+  document.getElementById('input-pin').value = '';
+  document.getElementById('tela-admin').classList.add('hidden');
+  document.getElementById('tela-pin').classList.remove('hidden');
 }
 
 async function carregarAdmin() {
