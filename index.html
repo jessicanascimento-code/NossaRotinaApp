@@ -42,7 +42,7 @@
   .card-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
   .card-title{ font-family:'Playfair Display', serif; font-size:16.5px; font-weight:500; line-height:1.25; }
   .card.done .card-title{ text-decoration: line-through; text-decoration-color: rgba(91,64,56,0.4); }
-  .avatar{ width:26px; height:26px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:#fff; }
+  .avatar{ flex-shrink:0; padding:4px 11px; border-radius:20px; font-size:10.5px; font-weight:800; color:#fff; white-space:nowrap; }
   .meta-row{ display:flex; gap:6px; margin-top:8px; flex-wrap:wrap; }
   .tag{ font-size:10px; font-weight:700; padding:3px 9px; border-radius:20px; background: var(--rosa-claro-2); color: var(--marrom); border:1px solid rgba(91,64,56,0.12); }
   .status-row{ display:flex; gap:6px; margin-top:12px; }
@@ -50,6 +50,8 @@
   .status-btn.sel-pendente{ border-color: var(--rosa-queimado); color: var(--rosa-queimado-escuro); opacity:1; }
   .status-btn.sel-feita{ background: var(--ok-bg); border-color: var(--verde-salvia); color:#4F5C48; opacity:1; }
   .status-btn.sel-adiada{ background: var(--adiada-bg); border-color:#B98254; color:#8A5A34; opacity:1; }
+  .adiar-amanha{ text-align:center; margin-top:9px; font-size:10.5px; font-weight:700; color: var(--rosa-queimado-escuro); cursor:pointer; text-decoration:underline; opacity:0.75; }
+  .adiar-amanha:hover{ opacity:1; }
   .empty{ text-align:center; padding:40px 10px; opacity:0.6; font-size:13px; }
   .bottom-nav{ position:fixed; bottom:0; left:0; right:0; height:64px; background:rgba(255,255,255,0.94); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:space-around; border-top:1px solid rgba(91,64,56,0.08); max-width:480px; margin:0 auto; }
   .nav-item{ text-align:center; font-size:10px; font-weight:700; opacity:0.4; cursor:pointer; }
@@ -79,7 +81,10 @@
         <h1 id="saudacao">Bom dia!</h1>
         <div class="date" id="data-hoje"></div>
       </div>
-      <div class="rings" id="anéis"></div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+        <img src="Logo.png" alt="Nossa Rotina" style="width:46px; height:46px; border-radius:50%; object-fit:cover; box-shadow:0 2px 8px rgba(91,68,68,0.18); border:2px solid #fff;">
+        <div class="rings" id="anéis"></div>
+      </div>
     </header>
 
     <div class="tabs">
@@ -135,6 +140,18 @@
 
     <div class="group-label" style="margin-top:22px;">Atividades cadastradas</div>
     <div id="lista-admin"></div>
+
+    <div class="group-label" style="margin-top:26px;">Notificação manual</div>
+    <div class="form-admin" style="background:#fff; border-radius:16px; padding:14px;">
+      <label>Enviar para</label>
+      <select id="notif-responsavel">
+        <option value="Diêgo">Diêgo</option>
+        <option value="Jessica">Jessica</option>
+      </select>
+      <label>Mensagem (deixe vazio pra usar a padrão)</label>
+      <input type="text" id="notif-mensagem" placeholder="🐱 Dá uma olhada nas suas tarefas de hoje!">
+      <button class="btn-primario" onclick="enviarNotificacaoManual()">🔔 Enviar agora</button>
+    </div>
   </div>
 
   <div class="bottom-nav">
@@ -148,7 +165,7 @@
 <script>
 /* ======= CONFIGURAÇÃO ======= */
 // Cole aqui a URL do seu Web App do Apps Script (veja o GUIA_CONFIGURACAO.md)
-const API_URL = 'https://script.google.com/macros/s/AKfycbzVLm9Y8CtAckWLQjuTywKM5HOMS03qFGfDT8sn2fQ-y6B7l0aGsdk1lFVSVxrRW7wZ/exec';
+const API_URL = 'COLE_AQUI_A_URL_DO_APPS_SCRIPT';
 
 const CORES_PESSOA = {}; // preenchido dinamicamente com base nos responsáveis encontrados
 const PALETA_AVATAR = ['#A66868', '#5C4444'];
@@ -221,12 +238,11 @@ async function carregarHoje() {
   resp.atividades.forEach(a => {
     const card = document.createElement('div');
     card.className = 'card' + (a.status === 'Feita' ? ' done' : '');
-    const inicial = (a.responsavel || '?').charAt(0).toUpperCase();
     const cor = corDaPessoa(a.responsavel);
     card.innerHTML = `
       <div class="card-top">
         <div class="card-title">${a.tarefa}</div>
-        <div class="avatar" style="background:${cor}">${inicial}</div>
+        <div class="avatar" style="background:${cor}">${a.responsavel}</div>
       </div>
       <div class="meta-row">
         <span class="tag">${a.frequencia}</span>
@@ -237,7 +253,14 @@ async function carregarHoje() {
         <div class="status-btn ${a.status === 'Feita' ? 'sel-feita' : ''}" data-status="Feita">Feita</div>
         <div class="status-btn ${a.status === 'Adiada' ? 'sel-adiada' : ''}" data-status="Adiada">Adiada</div>
       </div>
+      <div class="adiar-amanha">Adiar até amanhã →</div>
     `;
+    card.querySelector('.adiar-amanha').addEventListener('click', async () => {
+      card.querySelectorAll('.status-btn').forEach(b => b.classList.remove('sel-pendente','sel-feita','sel-adiada'));
+      card.querySelector('[data-status="Adiada"]').classList.add('sel-adiada');
+      await chamarApi({ action: 'adiarAmanha', id: a.id, data: a.data });
+      mostrarToast('Adiada até amanhã ✓');
+    });
     card.querySelectorAll('.status-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
         const novoStatus = btn.dataset.status;
@@ -367,6 +390,19 @@ async function excluirAtividade(id) {
   carregarAdmin();
 }
 
+async function enviarNotificacaoManual() {
+  const pin = sessionStorage.getItem('nr_pin');
+  const responsavel = document.getElementById('notif-responsavel').value;
+  const mensagem = document.getElementById('notif-mensagem').value;
+  const resp = await chamarApi({ action: 'adminNotificar', pin, responsavel, mensagem });
+  if (resp.ok) {
+    mostrarToast('Notificação enviada ✓');
+    document.getElementById('notif-mensagem').value = '';
+  } else {
+    mostrarToast(resp.erro || 'Falha ao enviar');
+  }
+}
+
 /* ======= TABS HOJE/TODAS ======= */
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
@@ -387,7 +423,7 @@ async function carregarTodas() {
     card.innerHTML = `
       <div class="card-top">
         <div class="card-title">${a.tarefa}</div>
-        <div class="avatar" style="background:${corDaPessoa(a.responsavel)}">${a.responsavel.charAt(0).toUpperCase()}</div>
+        <div class="avatar" style="background:${corDaPessoa(a.responsavel)}">${a.responsavel}</div>
       </div>
       <div class="meta-row"><span class="tag">${a.frequencia}</span><span class="tag">${a.responsavel}</span></div>
     `;
