@@ -30,9 +30,14 @@
   .eyebrow{ font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color: var(--rosa-queimado-escuro); font-weight:700; }
   h1{ font-family:'Playfair Display', serif; font-size:26px; font-weight:600; margin:2px 0 0; }
   .date{ font-size:12px; opacity:0.65; margin-top:4px; }
-  .rings{ display:flex; gap:10px; }
-  .ring{ width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:#fff; }
-  .ring-label{ font-size:9px; margin-top:4px; opacity:0.7; font-weight:600; text-align:center; }
+  .logo-topo{ width:64px; height:64px; object-fit:contain; filter: drop-shadow(0 3px 8px rgba(91,68,68,0.28)); flex-shrink:0; }
+  .resumo-dia{ display:flex; gap:10px; margin:16px 0 20px; }
+  .resumo-pessoa{ flex:1; background:#fff; border-radius:16px; padding:10px 12px; display:flex; align-items:center; gap:10px; box-shadow:0 2px 10px rgba(91,64,56,0.07); }
+  .resumo-pessoa .ring{ width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .resumo-pessoa .ring span{ background:#fff; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; color: var(--marrom-escuro); }
+  .resumo-pessoa .info{ line-height:1.25; }
+  .resumo-pessoa .nome{ font-size:12px; font-weight:800; color: var(--marrom-escuro); }
+  .resumo-pessoa .pct{ font-size:11px; font-weight:700; color: var(--rosa-queimado-escuro); }
   .tabs{ display:flex; gap:6px; background: var(--rosa-claro-2); padding:4px; border-radius:14px; margin-bottom:20px; }
   .tab{ flex:1; text-align:center; padding:8px 0; font-size:12.5px; font-weight:700; border-radius:11px; opacity:0.55; cursor:pointer; }
   .tab.active{ background: var(--marrom-escuro); color:#fff; opacity:1; }
@@ -77,15 +82,14 @@
   <div id="tela-principal">
     <header class="top">
       <div>
-        <div class="eyebrow">Nossa Rotina 🐱</div>
+        <div class="eyebrow">Nossa Rotina</div>
         <h1 id="saudacao">Bom dia!</h1>
         <div class="date" id="data-hoje"></div>
       </div>
-      <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
-        <img src="Logo.png" alt="Nossa Rotina" style="width:46px; height:46px; border-radius:50%; object-fit:cover; box-shadow:0 2px 8px rgba(91,68,68,0.18); border:2px solid #fff;">
-        <div class="rings" id="anéis"></div>
-      </div>
+      <img src="Logo.png" alt="Nossa Rotina" class="logo-topo">
     </header>
+
+    <div class="resumo-dia" id="resumo-dia"></div>
 
     <div class="tabs">
       <div class="tab active" data-tab="hoje">Hoje</div>
@@ -292,19 +296,22 @@ function atualizarAneis(atividades) {
     porPessoa[a.responsavel].total++;
     if (a.status === 'Feita') porPessoa[a.responsavel].feitas++;
   });
-  const container = document.getElementById('anéis');
+  const container = document.getElementById('resumo-dia');
   container.innerHTML = '';
   Object.keys(porPessoa).forEach(pessoa => {
     const { total, feitas } = porPessoa[pessoa];
     const pct = total ? Math.round((feitas / total) * 100) : 0;
     const cor = corDaPessoa(pessoa);
-    const wrap = document.createElement('div');
-    wrap.style.textAlign = 'center';
-    wrap.innerHTML = `
-      <div class="ring" style="background: conic-gradient(${cor} 0% ${pct}%, #E7D3C9 ${pct}% 100%);">${pct}%</div>
-      <div class="ring-label">${pessoa}</div>
+    const card = document.createElement('div');
+    card.className = 'resumo-pessoa';
+    card.innerHTML = `
+      <div class="ring" style="background: conic-gradient(${cor} 0% ${pct}%, #E7D3C9 ${pct}% 100%);"><span>${pct}%</span></div>
+      <div class="info">
+        <div class="nome">${pessoa}</div>
+        <div class="pct">${feitas}/${total} feitas hoje</div>
+      </div>
     `;
-    container.appendChild(wrap);
+    container.appendChild(card);
   });
 }
 
