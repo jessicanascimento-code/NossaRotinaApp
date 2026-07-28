@@ -31,6 +31,7 @@
   h1{ font-family:'Playfair Display', serif; font-size:26px; font-weight:600; margin:2px 0 0; }
   .date{ font-size:12px; opacity:0.65; margin-top:4px; }
   .logo-topo{ width:100px; height:100px; object-fit:contain; filter: drop-shadow(0 3px 8px rgba(91,68,68,0.28)); flex-shrink:0; margin-left:14px; }
+
   .resumo-dia{ display:flex; gap:10px; margin:16px 0 20px; }
   .resumo-pessoa{ flex:1; background:#fff; border-radius:16px; padding:10px 12px; display:flex; align-items:center; gap:10px; box-shadow:0 2px 10px rgba(91,64,56,0.07); }
   .resumo-pessoa .ring{ width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
@@ -38,15 +39,20 @@
   .resumo-pessoa .info{ line-height:1.25; }
   .resumo-pessoa .nome{ font-size:12px; font-weight:800; color: var(--marrom-escuro); }
   .resumo-pessoa .pct{ font-size:11px; font-weight:700; color: var(--rosa-queimado-escuro); }
+
   .tabs{ display:flex; gap:6px; background: var(--rosa-claro-2); padding:4px; border-radius:14px; margin-bottom:20px; }
-  .tab{ flex:1; text-align:center; padding:8px 0; font-size:12.5px; font-weight:700; border-radius:11px; opacity:0.55; cursor:pointer; }
+  .tab{ flex:1; text-align:center; padding:8px 0; font-size:12px; font-weight:700; border-radius:11px; opacity:0.55; cursor:pointer; }
   .tab.active{ background: var(--marrom-escuro); color:#fff; opacity:1; }
   .group-label{ font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color: var(--rosa-queimado-escuro); margin:18px 0 10px 2px; }
+
   .card{ background:#fff; border-radius:18px; padding:14px 14px 12px; margin-bottom:10px; box-shadow:0 2px 14px rgba(91,64,56,0.08); border:1px solid rgba(91,64,56,0.06); }
   .card.done{ opacity:0.55; }
   .card-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
   .card-title{ font-family:'Playfair Display', serif; font-size:16.5px; font-weight:500; line-height:1.25; }
   .card.done .card-title{ text-decoration: line-through; text-decoration-color: rgba(91,64,56,0.4); }
+  .card-top-direita{ display:flex; align-items:center; gap:6px; flex-shrink:0; }
+  .troca-resp{ cursor:pointer; font-size:15px; opacity:0.55; }
+  .troca-resp:hover{ opacity:1; }
   .avatar{ flex-shrink:0; padding:4px 11px; border-radius:20px; font-size:10.5px; font-weight:800; color:#fff; white-space:nowrap; }
   .meta-row{ display:flex; gap:6px; margin-top:8px; flex-wrap:wrap; }
   .tag{ font-size:10px; font-weight:700; padding:3px 9px; border-radius:20px; background: var(--rosa-claro-2); color: var(--marrom); border:1px solid rgba(91,64,56,0.12); }
@@ -58,6 +64,16 @@
   .adiar-amanha{ text-align:center; margin-top:9px; font-size:10.5px; font-weight:700; color: var(--rosa-queimado-escuro); cursor:pointer; text-decoration:underline; opacity:0.75; }
   .adiar-amanha:hover{ opacity:1; }
   .empty{ text-align:center; padding:40px 10px; opacity:0.6; font-size:13px; }
+
+  /* Histórico */
+  .streak-badge{ display:inline-block; background: var(--rosa-claro-2); color: var(--rosa-queimado-escuro); font-size:11px; font-weight:800; padding:5px 12px; border-radius:20px; margin: 6px 0 12px; }
+  .grafico-semanal{ display:flex; justify-content:space-between; gap:6px; margin-top:6px; }
+  .barra-dia{ display:flex; flex-direction:column; align-items:center; flex:1; }
+  .barra-fundo{ width:100%; max-width:26px; height:70px; background: var(--rosa-claro-2); border-radius:8px; display:flex; align-items:flex-end; overflow:hidden; }
+  .barra-preenchida{ width:100%; border-radius:8px 8px 0 0; min-height:4px; transition: height .3s; }
+  .barra-label{ font-size:9px; font-weight:700; opacity:0.6; margin-top:5px; text-transform:capitalize; }
+  .barra-pct{ font-size:9px; font-weight:800; opacity:0.75; margin-top:2px; }
+
   .bottom-nav{ position:fixed; bottom:0; left:0; right:0; height:64px; background:rgba(255,255,255,0.94); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:space-around; border-top:1px solid rgba(91,64,56,0.08); max-width:480px; margin:0 auto; }
   .nav-item{ text-align:center; font-size:10px; font-weight:700; opacity:0.4; cursor:pointer; }
   .nav-item.active{ opacity:1; color: var(--rosa-queimado-escuro); }
@@ -69,6 +85,9 @@
   .btn-primario{ background: var(--rosa-queimado-escuro); color:#fff; border:none; padding:10px 20px; border-radius:12px; font-weight:700; font-size:13px; cursor:pointer; margin-top:14px; }
   .form-admin label{ font-size:11px; font-weight:700; color: var(--marrom); display:block; margin:12px 0 4px; }
   .form-admin input, .form-admin select{ width:100%; padding:9px 10px; border-radius:10px; border:1.5px solid rgba(91,64,56,0.18); font-family:inherit; font-size:13px; }
+  .dias-checkboxes{ display:flex; flex-wrap:wrap; gap:6px; }
+  .dias-checkboxes label{ display:flex; align-items:center; gap:4px; font-size:11px; font-weight:700; color: var(--marrom); background: var(--rosa-claro-2); padding:6px 9px; border-radius:10px; cursor:pointer; margin:0; }
+  .dias-checkboxes input{ width:auto; margin:0; }
   .admin-item{ display:flex; justify-content:space-between; align-items:center; background:#fff; padding:10px 12px; border-radius:12px; margin-bottom:8px; font-size:13px; }
   .admin-item .acoes span{ cursor:pointer; margin-left:10px; font-size:12px; color: var(--rosa-queimado-escuro); font-weight:700; }
   .toast{ position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:var(--marrom-escuro); color:#fff; padding:10px 18px; border-radius:20px; font-size:12px; opacity:0; transition:opacity .3s; pointer-events:none; }
@@ -94,6 +113,7 @@
     <div class="tabs">
       <div class="tab active" data-tab="hoje">Hoje</div>
       <div class="tab" data-tab="todas">Todas</div>
+      <div class="tab" data-tab="historico">Histórico</div>
     </div>
 
     <div id="lista-atividades"><div class="empty">Carregando...</div></div>
@@ -125,7 +145,7 @@
       <label>Observação</label>
       <input type="text" id="admin-observacao">
       <label>Frequência</label>
-      <select id="admin-frequencia">
+      <select id="admin-frequencia" onchange="atualizarVisibilidadeDias()">
         <option value="Diariamente">Diariamente</option>
         <option value="2x Semana">2x Semana</option>
         <option value="3x Semana">3x Semana</option>
@@ -133,12 +153,27 @@
         <option value="Mensal">Mensal</option>
         <option value="Extra">Extra (data única)</option>
       </select>
-      <label>Dias (ex: seg-sex, ter/sex, dom/qua/sex — deixe vazio se for Mensal/Extra/Fim de semana)</label>
-      <input type="text" id="admin-dias">
+
+      <div id="grupo-dias">
+        <label>Dias da semana</label>
+        <div class="dias-checkboxes" id="admin-dias-checkboxes">
+          <label><input type="checkbox" value="seg"> Seg</label>
+          <label><input type="checkbox" value="ter"> Ter</label>
+          <label><input type="checkbox" value="qua"> Qua</label>
+          <label><input type="checkbox" value="qui"> Qui</label>
+          <label><input type="checkbox" value="sex"> Sex</label>
+          <label><input type="checkbox" value="sab"> Sáb</label>
+          <label><input type="checkbox" value="dom"> Dom</label>
+        </div>
+      </div>
+
       <label>Data de referência (só p/ Mensal ou Extra — formato AAAA-MM-DD)</label>
       <input type="text" id="admin-dataReferencia" placeholder="2026-08-01">
       <label>Responsável</label>
-      <input type="text" id="admin-responsavel">
+      <select id="admin-responsavel">
+        <option value="Jessica">Jessica</option>
+        <option value="Diêgo">Diêgo</option>
+      </select>
       <button class="btn-primario" onclick="salvarAtividade()">Salvar</button>
     </div>
 
@@ -147,6 +182,10 @@
 
     <div class="group-label" style="margin-top:26px;">Notificação manual</div>
     <div class="form-admin" style="background:#fff; border-radius:16px; padding:14px;">
+      <label>Sobre qual atividade (opcional)</label>
+      <select id="notif-atividade" onchange="preencherNotifPelaAtividade()">
+        <option value="">— Mensagem livre —</option>
+      </select>
       <label>Enviar para</label>
       <select id="notif-responsavel">
         <option value="Diêgo">Diêgo</option>
@@ -168,11 +207,9 @@
 
 <script>
 /* ======= CONFIGURAÇÃO ======= */
-// Cole aqui a URL do seu Web App do Apps Script (veja o GUIA_CONFIGURACAO.md)
-const API_URL = 'https://script.google.com/macros/s/AKfycbygnqGF-3ldFBYLpmeGPPjE3B_Zv7EWIQtwSNj1QE_uAhV0SwDG8JfXTUlfquAFzwd5/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbx-JgEasCHBeCfxRs3X96ekGHL_4HvwQq_v29zPjERTgkNTtDieiKsaZslBka32sJtZ/exec';
 
-const CORES_PESSOA = {}; // preenchido dinamicamente com base nos responsáveis encontrados
-const PALETA_AVATAR = ['#A66868', '#5C4444'];
+const CORES_PESSOA = {};
 
 /* ======= JSONP HELPER ======= */
 let contadorJsonp = 0;
@@ -246,7 +283,10 @@ async function carregarHoje() {
     card.innerHTML = `
       <div class="card-top">
         <div class="card-title">${a.tarefa}</div>
-        <div class="avatar" style="background:${cor}">${a.responsavel}</div>
+        <div class="card-top-direita">
+          <span class="troca-resp" title="Trocar responsável hoje">🔁</span>
+          <div class="avatar" style="background:${cor}">${a.responsavel}</div>
+        </div>
       </div>
       <div class="meta-row">
         <span class="tag">${a.frequencia}</span>
@@ -259,12 +299,7 @@ async function carregarHoje() {
       </div>
       <div class="adiar-amanha">Adiar até amanhã →</div>
     `;
-    card.querySelector('.adiar-amanha').addEventListener('click', async () => {
-      card.querySelectorAll('.status-btn').forEach(b => b.classList.remove('sel-pendente','sel-feita','sel-adiada'));
-      card.querySelector('[data-status="Adiada"]').classList.add('sel-adiada');
-      await chamarApi({ action: 'adiarAmanha', id: a.id, data: a.data });
-      mostrarToast('Adiada até amanhã ✓');
-    });
+
     card.querySelectorAll('.status-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
         const novoStatus = btn.dataset.status;
@@ -275,6 +310,19 @@ async function carregarHoje() {
         mostrarToast('Atualizado ✓');
       });
     });
+
+    card.querySelector('.adiar-amanha').addEventListener('click', async () => {
+      await chamarApi({ action: 'adiarAmanha', id: a.id, data: a.data });
+      mostrarToast('Adiada até amanhã ✓');
+      carregarHoje();
+    });
+
+    card.querySelector('.troca-resp').addEventListener('click', async () => {
+      await chamarApi({ action: 'trocarResponsavel', id: a.id, data: a.data });
+      mostrarToast('Responsável trocado ✓');
+      carregarHoje();
+    });
+
     lista.appendChild(card);
   });
 
@@ -315,6 +363,50 @@ function atualizarAneis(atividades) {
   });
 }
 
+/* ======= HISTÓRICO SEMANAL ======= */
+async function carregarHistorico() {
+  const resp = await chamarApi({ action: 'listarHistorico' });
+  const lista = document.getElementById('lista-atividades');
+  lista.innerHTML = '';
+
+  const dias = resp.dias || [];
+  const pessoas = Object.keys(resp.porPessoa || {});
+
+  if (pessoas.length === 0) {
+    lista.innerHTML = '<div class="empty">Ainda não há histórico suficiente 🐾</div>';
+    return;
+  }
+
+  pessoas.forEach(pessoa => {
+    const info = resp.porPessoa[pessoa];
+    const cor = corDaPessoa(pessoa);
+
+    const barras = dias.map((d, i) => {
+      const pct = info.percentuais[i];
+      const altura = pct === null ? 4 : Math.max(pct, 4);
+      const label = new Date(d + 'T00:00:00').toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
+      return `
+        <div class="barra-dia">
+          <div class="barra-fundo"><div class="barra-preenchida" style="height:${altura}%; background:${cor};"></div></div>
+          <div class="barra-label">${label}</div>
+          <div class="barra-pct">${pct === null ? '—' : pct + '%'}</div>
+        </div>`;
+    }).join('');
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="card-title">${pessoa}</div>
+        <div class="avatar" style="background:${cor}">${info.mediaSemana}% na semana</div>
+      </div>
+      ${info.streak > 0 ? `<div class="streak-badge">🔥 ${info.streak} dia${info.streak > 1 ? 's' : ''} seguido${info.streak > 1 ? 's' : ''} com 100%</div>` : ''}
+      <div class="grafico-semanal">${barras}</div>
+    `;
+    lista.appendChild(card);
+  });
+}
+
 /* ======= ADMIN ======= */
 async function validarPin() {
   const pin = document.getElementById('input-pin').value;
@@ -338,12 +430,16 @@ function sairAdmin() {
   document.getElementById('tela-pin').classList.remove('hidden');
 }
 
+let atividadesAdminCache = [];
+
 async function carregarAdmin() {
   const pin = sessionStorage.getItem('nr_pin');
   const resp = await chamarApi({ action: 'adminListar', pin });
+  atividadesAdminCache = resp.atividades || [];
+
   const lista = document.getElementById('lista-admin');
   lista.innerHTML = '';
-  (resp.atividades || []).forEach(a => {
+  atividadesAdminCache.forEach(a => {
     const item = document.createElement('div');
     item.className = 'admin-item';
     item.innerHTML = `
@@ -352,6 +448,59 @@ async function carregarAdmin() {
     `;
     lista.appendChild(item);
   });
+
+  const selectNotif = document.getElementById('notif-atividade');
+  selectNotif.innerHTML = '<option value="">— Mensagem livre —</option>';
+  atividadesAdminCache.filter(a => a.ativo).forEach(a => {
+    const opt = document.createElement('option');
+    opt.value = a.id;
+    opt.textContent = `${a.tarefa} (${a.responsavel})`;
+    selectNotif.appendChild(opt);
+  });
+}
+
+function preencherNotifPelaAtividade() {
+  const id = document.getElementById('notif-atividade').value;
+  if (!id) return;
+  const atividade = atividadesAdminCache.find(a => String(a.id) === String(id));
+  if (!atividade) return;
+  document.getElementById('notif-responsavel').value = atividade.responsavel;
+  document.getElementById('notif-mensagem').value = `🐱 Lembrete: não esquece de *${atividade.tarefa}* hoje, ${atividade.responsavel}!`;
+}
+
+function atualizarVisibilidadeDias() {
+  const freq = document.getElementById('admin-frequencia').value;
+  const mostrar = ['Diariamente', '2x Semana', '3x Semana'].includes(freq);
+  document.getElementById('grupo-dias').style.display = mostrar ? '' : 'none';
+}
+
+function marcarDiasCheckboxes(diasStr) {
+  document.querySelectorAll('#admin-dias-checkboxes input').forEach(cb => cb.checked = false);
+  if (!diasStr) return;
+  const ordem = ['dom','seg','ter','qua','qui','sex','sab'];
+  let codigos = [];
+  const d = diasStr.toLowerCase().trim();
+  if (d.includes('-')) {
+    const [ini, fim] = d.split('-').map(s => s.trim().slice(0,3));
+    let i = ordem.indexOf(ini);
+    const iFim = ordem.indexOf(fim);
+    if (i !== -1 && iFim !== -1) {
+      while (true) { codigos.push(ordem[i]); if (i === iFim) break; i = (i + 1) % 7; }
+    }
+  } else if (d.includes('/')) {
+    codigos = d.split('/').map(s => s.trim().slice(0,3));
+  } else if (d) {
+    codigos = [d.slice(0,3)];
+  }
+  codigos.forEach(c => {
+    const cb = document.querySelector(`#admin-dias-checkboxes input[value="${c}"]`);
+    if (cb) cb.checked = true;
+  });
+}
+
+function lerDiasCheckboxes() {
+  const ordem = ['seg','ter','qua','qui','sex','sab','dom'];
+  return ordem.filter(c => document.querySelector(`#admin-dias-checkboxes input[value="${c}"]`).checked).join('/');
 }
 
 function editarAtividade(a) {
@@ -359,9 +508,10 @@ function editarAtividade(a) {
   document.getElementById('admin-tarefa').value = a.tarefa;
   document.getElementById('admin-observacao').value = a.observacao || '';
   document.getElementById('admin-frequencia').value = a.frequencia;
-  document.getElementById('admin-dias').value = a.dias || '';
+  marcarDiasCheckboxes(a.dias || '');
   document.getElementById('admin-dataReferencia').value = a.dataReferencia || '';
   document.getElementById('admin-responsavel').value = a.responsavel;
+  atualizarVisibilidadeDias();
   window.scrollTo(0,0);
 }
 
@@ -373,7 +523,7 @@ async function salvarAtividade() {
     tarefa: document.getElementById('admin-tarefa').value,
     observacao: document.getElementById('admin-observacao').value,
     frequencia: document.getElementById('admin-frequencia').value,
-    dias: document.getElementById('admin-dias').value,
+    dias: lerDiasCheckboxes(),
     dataReferencia: document.getElementById('admin-dataReferencia').value,
     responsavel: document.getElementById('admin-responsavel').value
   };
@@ -385,7 +535,8 @@ async function salvarAtividade() {
   }
   mostrarToast('Salvo ✓');
   document.getElementById('admin-id').value = '';
-  ['tarefa','observacao','dias','dataReferencia','responsavel'].forEach(c => document.getElementById('admin-' + c).value = '');
+  ['tarefa','observacao','dataReferencia'].forEach(c => document.getElementById('admin-' + c).value = '');
+  document.querySelectorAll('#admin-dias-checkboxes input').forEach(cb => cb.checked = false);
   carregarAdmin();
 }
 
@@ -410,13 +561,14 @@ async function enviarNotificacaoManual() {
   }
 }
 
-/* ======= TABS HOJE/TODAS ======= */
+/* ======= TABS HOJE/TODAS/HISTÓRICO ======= */
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     if (tab.dataset.tab === 'hoje') carregarHoje();
-    else carregarTodas();
+    else if (tab.dataset.tab === 'todas') carregarTodas();
+    else carregarHistorico();
   });
 });
 
@@ -439,6 +591,7 @@ async function carregarTodas() {
 }
 
 /* ======= INÍCIO ======= */
+atualizarVisibilidadeDias();
 carregarHoje();
 </script>
 </body>
